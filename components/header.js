@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 const MenuItem = ({ children, href }) =>
   <a href={href} class="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4 hover:underline">
     {children}
