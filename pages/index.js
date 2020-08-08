@@ -6,6 +6,7 @@ import Link from 'next/link'
 import SplashLayout from '../components/SplashLayout'
 import Map from './newworkingmap'
 import Header from '../components/header'
+import AddLocationTracking from '../components/AddLocationTracking'
 
 
 const LinkA = ({ children, href }) =>
@@ -45,6 +46,7 @@ function Home () {
       {user && (
         <>
           <Header user={user}/>
+          <AddLocationTracking user={user}/>
           <Map />
         </>
       )}

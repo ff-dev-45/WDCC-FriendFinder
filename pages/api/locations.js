@@ -18,7 +18,7 @@ handler.post(async (req, res) => {
     await req.db.collection('locations').insert(data)
     res.json({ message: 'ok' })
   } catch (e) {
-    res.json({ message: 'error', e })
+    res.json({ message: 'error', e: e.message })
   }
 })
 
