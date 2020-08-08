@@ -23,7 +23,7 @@ handler.post(async (req, res) => {
     res.status(400).end('Missing parameter. All of `userid`, `position`, `timestamp` are required')
     return
   }
-  if (typeof userid != 'string' || typeof position != 'object' || typeof timestamp != 'number') {
+  if (typeof userid !== 'string' || typeof position !== 'object' || typeof timestamp !== 'number') {
     res.status(400).end('Invalid parameter type')
     return
   }
@@ -33,7 +33,7 @@ handler.post(async (req, res) => {
     res.status(400).end('Missing parameter. All of `position.lat`, `position.lng` are required')
     return
   }
-  if (typeof (alt || 0) != 'number' || typeof lat != 'number' || typeof lng != 'number') {
+  if (typeof (alt || 0) !== 'number' || typeof lat !== 'number' || typeof lng !== 'number') {
     res.status(400).end('Invalid parameter type')
     return
   }
