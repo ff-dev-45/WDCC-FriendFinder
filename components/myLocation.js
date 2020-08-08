@@ -11,10 +11,9 @@ const UserLocation = (props) => {
       { enableHighAccuracy: true }
     )
   }, [])
-  console.log('return marker componenet')
+
   return (
     <Marker
-
       key={props.user.userid}
       position={currentLocation}
       name={props.user.name}
