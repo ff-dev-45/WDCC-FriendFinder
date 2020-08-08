@@ -4,9 +4,9 @@ import { InfoWindow, Marker } from 'google-maps-react';
 import axios from 'axios'
 
 const mapStyles = {
-  width: '100%',
-  height: '100%'
-};
+  width: '100vw',
+  height: '100vh',
+}
 
 const MapContainer = (props) => {
   const [showingInfoWindow, setShowingInfoWindow] = useState(false);
