@@ -23,7 +23,7 @@ function Header ({ user, loading }) {
   return (
     <>
       {qrShown && <MyQR user={user} onClick={() => setQrShown(false)}></MyQR>}
-      <header style={{backgroundColor:'#2F6A8F'}}>
+      <header style={{backgroundColor:'#2F6A8F',position:'fixed',top:0,left:0,zIndex:1,width:'100vw'}}>
         <nav class="flex items-center justify-between flex-wrap p-6">
           <div class="flex items-center flex-shrink-0 text-white mr-6">
             <img class="fill-current w-8 mr-2"  src='/logo.png'></img>
