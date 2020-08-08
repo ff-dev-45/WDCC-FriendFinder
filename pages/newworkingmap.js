@@ -33,7 +33,6 @@ const MapContainer = (props) => {
       })
       .then(res => {
         locationData = res.data
-        console.log("locationData", locationData)
         locationData.forEach(element => {
           const { userid } = element
           var name = ""
@@ -45,7 +44,6 @@ const MapContainer = (props) => {
           } else {
             name = userid
           }
-          console.log()
           newLocationData.push({
             position: {
               lat: element.position.lat,
@@ -55,9 +53,7 @@ const MapContainer = (props) => {
             name: name,
             userid: element.userid
           })
-          console.log(newLocationData)
         })
-        console.log("Finish updating locations")
         setLocations(newLocationData)
       })
   }, [])
@@ -74,8 +70,6 @@ const MapContainer = (props) => {
       setActiveMarker(null)
     }
   }
-
-  console.log("Locations:", locations)
 
   return (
     <Map
