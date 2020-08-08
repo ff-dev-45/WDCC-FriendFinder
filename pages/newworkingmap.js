@@ -16,9 +16,49 @@ const MapContainer = (props) => {
   const [locations, setLocations] = useState([])
 
   useEffect(() => {
-    axios.get(`${config.HOST}/api/locations`)
+    var userObj = {}
+    var locationData = []
+    var newLocationData = []
+
+    axios.get(`${config.HOST}/api/users`)
       .then(res => {
-        setLocations(res.data)
+        res.data.forEach(element => {
+          const { userid } = element
+          userObj = {
+            ...userObj,
+            [userid]: element
+          }
+        })
+        return axios.get(`${config.HOST}/api/locations`)
+      })
+      .then(res => {
+        locationData = res.data
+        console.log("locationData", locationData)
+        locationData.forEach(element => {
+          const { userid } = element
+          var name = ""
+          if (userObj[userid] !== undefined) {
+            // User id exist in the user table
+            const user = userObj[userid]
+            const { firstname, lastname } = user
+            name = firstname + " " + lastname
+          } else {
+            name = userid
+          }
+          console.log()
+          newLocationData.push({
+            position: {
+              lat: element.position.lat,
+              lng: element.position.lng,
+              alt: element.position.alt,
+            },
+            name: name,
+            userid: element.userid
+          })
+          console.log(newLocationData)
+        })
+        console.log("Finish updating locations")
+        setLocations(newLocationData)
       })
   }, [])
 
@@ -35,6 +75,8 @@ const MapContainer = (props) => {
     }
   }
 
+  console.log("Locations:", locations)
+
   return (
     <Map
       google={props.google}
@@ -46,7 +88,7 @@ const MapContainer = (props) => {
         <Marker
           key={user.userid}
           position={user.position}
-          name={user.userid}
+          name={user.name}
           onClick={onMarkerClick}
         />
       ))}
