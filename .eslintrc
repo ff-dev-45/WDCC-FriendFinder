@@ -24,6 +24,11 @@
       "consistent": true
     }],
     "quotes": ["error", "single"],
+    "react/jsx-uses-vars": "error",
+    "react/jsx-uses-react": "error",
     "semi": ["error", "never"]
-  }
+  },
+  "plugins": [
+    "react"
+  ]
 }
