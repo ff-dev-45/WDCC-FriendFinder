@@ -14,28 +14,29 @@ handler.get(async (req, res) => {
 
 handler.post(async (req, res) => {
   if (req.body == null) {
-    res.status(400).end('No body provided')
-    return
+    return res.status(400).json({ status: 'error', message: 'No body provided' })
   }
 
   const { userid, position, timestamp } = req.body
   if (userid == null || position == null || timestamp == null) {
-    res.status(400).end('Missing parameter. All of `userid`, `position`, `timestamp` are required')
-    return
+    return res.status(400).json({
+      status: 'error',
+      message: 'Missing parameter. All of `userid`, `position`, `timestamp` are required'
+    })
   }
   if (typeof userid !== 'string' || typeof position !== 'object' || typeof timestamp !== 'number') {
-    res.status(400).end('Invalid parameter type')
-    return
+    return res.status(400).json({ status: 'error', message: 'Invalid parameter type' })
   }
 
   const { alt, lat, lng } = position
   if (lat == null || lng == null) {
-    res.status(400).end('Missing parameter. All of `position.lat`, `position.lng` are required')
-    return
+    return res.status(400).json({
+      status: 'error',
+      message: 'Missing parameter. All of `position.lat`, `position.lng` are required'
+    })
   }
   if (typeof (alt || 0) !== 'number' || typeof lat !== 'number' || typeof lng !== 'number') {
-    res.status(400).end('Invalid parameter type')
-    return
+    return res.status(400).json({ status: 'error', message: 'Invalid parameter type' })
   }
 
   const safeData = {
@@ -46,9 +47,9 @@ handler.post(async (req, res) => {
 
   try {
     await req.db.collection('locations').updateOne({ userid }, { $set: safeData }, { upsert: true })
-    res.json({ message: 'ok' })
+    return res.json({ status: 'ok' })
   } catch (e) {
-    res.json({ message: 'error', e: e.message })
+    return res.json({ status: 'error', message: e.message })
   }
 })
 

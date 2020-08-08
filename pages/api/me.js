@@ -59,9 +59,9 @@ handler.post(async (req, res) => {
 
   try {
     await req.db.collection('users').updateOne({ userid }, { $set: safeData })
-    res.json({ status: 'ok' })
+    return res.json({ status: 'ok' })
   } catch (e) {
-    res.json({ status: 'error', message: e.message })
+    return res.json({ status: 'error', message: e.message })
   }
 })
 

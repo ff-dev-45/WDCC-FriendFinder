@@ -14,19 +14,19 @@ handler.get(async (req, res) => {
 
 handler.post(async (req, res) => {
   if (req.body == null) {
-    return res.status(400).end('No body provided')
+    return res.status(400).json({ status: 'error', message: 'No body provided' })
   }
 
   const { userid, firstname, lastname, nickname, friends } = req.body
   if (userid == null) {
-    return res.status(400).end('Missing parameter, `userid` is required')
+    return res.status(400).json({ status: 'error', message: 'Missing parameter, `userid` is required' })
   }
   if (typeof userid != 'string'
       || (firstname != null && typeof firstname !== 'string')
       || (lastname != null && typeof lastname !== 'string')
       || (nickname != null && typeof nickname !== 'string')
       || (friends != null && (!Array.isArray(friends) || !friends.every(f => typeof f === 'string')))) {
-    return res.status(400).end('Invalid parameter type')
+    return res.status(400).json({ status: 'error', message: 'Invalid parameter type' })
   }
 
   const safeData = {}
@@ -37,9 +37,9 @@ handler.post(async (req, res) => {
 
   try {
     await req.db.collection('users').updateOne({ userid }, { $set: safeData })
-    res.json({ message: 'ok' })
+    return res.json({ status: 'ok' })
   } catch (e) {
-    res.json({ message: 'error', e: e.message })
+    return res.json({ status: 'error', message: e.message })
   }
 })
 

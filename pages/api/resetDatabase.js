@@ -11,7 +11,7 @@ handler.get(async (req, res) => {
   await req.db.collection('locations').deleteMany({})
   req.db.collection('users').createIndex( { 'userid': 1 }, { unique: true } )
   req.db.collection('locations').createIndex( { 'userid': 1 }, { unique: true } )
-  res.json({ message: 'ok' })
+  res.json({ status: 'ok' })
 })
 
 export default handler
