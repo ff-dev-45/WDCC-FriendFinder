@@ -1,7 +1,7 @@
 {
   "name": "wdcc-app-template",
   "scripts": {
-    "dev": "next -p 3000",
+    "dev": "next -p 3141",
     "build": "next build",
     "start": "next start",
     "lint": "standard",
