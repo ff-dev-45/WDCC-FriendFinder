@@ -1,59 +1,67 @@
-import React, { Component } from 'react';
+import React, { Component, useState, useEffect } from 'react';
 import { Map, GoogleApiWrapper } from 'google-maps-react';
 import { InfoWindow, Marker } from 'google-maps-react';
+import axios from 'axios'
 
 const mapStyles = {
   width: '100%',
   height: '100%'
 };
 
-export class MapContainer extends Component {
-  state = {
-    showingInfoWindow: false,  //Hides or the shows the infoWindow
-    activeMarker: {},          //Shows the active marker upon click
-    selectedPlace: {}          //Shows the infoWindow to the selected place upon a marker
-  };
+const MapContainer = (props) => {
+  const [showingInfoWindow, setShowingInfoWindow] = useState(false);
+  const [activeMarker, setActiveMarker] = useState({});
+  const [selectedPlace, setSelectedPlace] = useState({});
+  const [locations, setLocations] = useState([]);
 
-  onMarkerClick = (props, marker, e) =>
-    this.setState({
-      selectedPlace: props,
-      activeMarker: marker,
-      showingInfoWindow: true
-    });
+  useEffect(() => {
+    console.log("component did mount")
+    axios.get("http://localhost:3141/api/locations")
+      .then(res => {
+        setLocations(res.data);
+      })
+  }, [])
 
-  onClose = props => {
-    if (this.state.showingInfoWindow) {
-      this.setState({
-        showingInfoWindow: false,
-        activeMarker: null
-      });
+  const onMarkerClick = (props, marker, e) => {
+    setSelectedPlace(props);
+    setActiveMarker(marker);
+    setShowingInfoWindow(true);
+  }
+
+  const onClose = props => {
+    if (showingInfoWindow) {
+      setShowingInfoWindow(false);
+      setActiveMarker(null);
     }
   };
 
-  render() {
-    return (
-      <Map
-        google={this.props.google}
-        zoom={14}
-        style={mapStyles}
-        initialCenter={{ lat: -36.8497513, lng: 174.762881 }}
+  return (
+    <Map
+      google={props.google}
+      zoom={14}
+      style={mapStyles}
+      initialCenter={{ lat: -36.8497513, lng: 174.762881 }}
+    >
+      {locations.map(user => (
+          <Marker
+            key={user.userid}
+            position={user.position}
+            name={user.userid}
+            onClick={onMarkerClick}
+          />
+        ))}
+      <InfoWindow
+        marker={activeMarker}
+        visible={showingInfoWindow}
+        onClose={onClose}
       >
-        <Marker
-          onClick={this.onMarkerClick}
-          name={'Bob'}
-        />
-        <InfoWindow
-          marker={this.state.activeMarker}
-          visible={this.state.showingInfoWindow}
-          onClose={this.onClose}
-        >
-          <div>
-            <h4>{this.state.selectedPlace.name}</h4>
-          </div>
-        </InfoWindow>
-      </Map>
-    );
-  }
+        <div>
+          <h4>{selectedPlace.name}</h4>
+        </div>
+      </InfoWindow>
+    </Map>
+  )
+
 }
 
 export default GoogleApiWrapper({
