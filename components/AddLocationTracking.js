@@ -1,10 +1,19 @@
 import { useState } from 'react'
 import config from '../lib/config'
-import { useFetchUser } from '../lib/user'
+
+const STATUS = {
+  FIRST_LOAD:    0,
+  LOADED:        1,
+  NOT_SUPPORTED: 2,
+  ERROR:         3,
+  BLOCKED:       4,
+}
 
 const NotSupported = () => <div>Location is not supported :(</div>
 
 const Blocked = () => <div>You have blocked access to your location</div>
+
+const Error = () => <div>An unknown error occurred while fetching your location</div>
 
 const sendLocation = async (user, { coords, timestamp }) => {
   const { altitude, latitude, longitude } = coords
@@ -24,28 +33,31 @@ const sendLocation = async (user, { coords, timestamp }) => {
 
 // when included, this will constantly send the users location to the server
 export const AddLocationTracking = ({ user }) => {
-  const [status, setStatus] = useState('firstRun')
+  const [status, setStatus] = useState(STATUS.FIRST_LOAD)
   const [geoWatch, setGeoWatch] = useState(null)
 
-  if (status === 'notSupported' || status === 'error') {
+  if (status === STATUS.NOT_SUPPORTED) {
     return <NotSupported></NotSupported>
   }
-  if (status === 'blocked') {
+  if (status === STATUS.ERROR) {
+    return <Error></Error>
+  }
+  if (status === STATUS.BLOCKED) {
     return <Blocked></Blocked>
   }
-  if (status === 'loaded') {
+  if (status === STATUS.LOADED) {
     return <></>
   }
   if (!('geolocation' in navigator)) {
-    setStatus('notSupported')
+    setStatus(STATUS.NOT_SUPPORTED)
     return <NotSupported></NotSupported>
   }
   setGeoWatch(navigator.geolocation.watchPosition(
     pos => {console.log(pos); sendLocation(user, pos) },
-    err => setStatus(err.code === err.PERMISSION_DENIED ? 'blocked' : 'error'),
+    err => setStatus(err.code === err.PERMISSION_DENIED ? STATUS.BLOCKED : STATUS.ERROR),
     { enableHighAccuracy: true }
   ))
-  setStatus('loaded')
+  setStatus(STATUS.LOADED)
   return <></>
 }
 
