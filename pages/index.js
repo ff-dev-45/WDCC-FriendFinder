@@ -2,9 +2,7 @@ import fetch from 'node-fetch'
 import Layout from '../components/layout'
 import { useFetchUser } from '../lib/user'
 import config from '../lib/config'
-import ProfileCard from '../components/ProfileCard'
 import Link from 'next/link'
-import SplashButton from '../components/SplashButton'
 import SplashLayout from '../components/SplashLayout'
 
 
