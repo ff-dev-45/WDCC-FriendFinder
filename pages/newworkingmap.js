@@ -15,7 +15,6 @@ const MapContainer = (props) => {
   const [locations, setLocations] = useState([]);
 
   useEffect(() => {
-    console.log("component did mount")
     axios.get("http://localhost:3141/api/locations")
       .then(res => {
         setLocations(res.data);
