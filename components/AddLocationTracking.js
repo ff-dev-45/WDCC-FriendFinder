@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import config from '../lib/config'
+import axios from 'axios'
 
 const STATUS = {
   FIRST_LOAD:    0,
@@ -17,17 +18,14 @@ const Error = () => <div>An unknown error occurred while fetching your location<
 
 const sendLocation = async (user, { coords, timestamp }) => {
   const { altitude, latitude, longitude } = coords
-  await fetch(`${config.HOST}/api/location`, {
-    method: 'post',
-    body: JSON.stringify({
-      name: user.nickname,
-      position: {
-        alt: altitude,
-        lat: latitude,
-        lng: longitude,
-      },
-      timestamp,
-    })
+  await axios.post(`${config.HOST}/api/locations`, {
+    userid: user.sub,
+    position: {
+      alt: altitude,
+      lat: latitude,
+      lng: longitude,
+    },
+    timestamp,
   })
 }
 
@@ -53,7 +51,7 @@ export const AddLocationTracking = ({ user }) => {
     return <NotSupported></NotSupported>
   }
   setGeoWatch(navigator.geolocation.watchPosition(
-    pos => {console.log(pos); sendLocation(user, pos) },
+    pos => sendLocation(user, pos),
     err => setStatus(err.code === err.PERMISSION_DENIED ? STATUS.BLOCKED : STATUS.ERROR),
     { enableHighAccuracy: true }
   ))
