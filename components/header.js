@@ -1,11 +1,7 @@
-import Link from 'next/link'
-
 const MenuItem = ({ children, href }) =>
-  <Link href={href}>
-    <li className='block mt-4 inline-block  rounded-md text-center bg-orange-200 hover:bg-orange-500 px-4 py-2 m-2 lg:mt-0 hover:text-white mr-4'>
-      <a className='no-underline hover:text-white'>{children}</a>
-    </li>
-  </Link>
+  <a href={href} class="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4 hover:underline">
+    {children}
+  </a>
 
 function Header ({ user, loading }) {
   return (
@@ -13,38 +9,30 @@ function Header ({ user, loading }) {
       {loading && <p>Loading login info...</p>}
       {user && (
         <>
-          <header className='bg-orange-300'>
-            <nav className='container flex items-center justify-between flex-wrap  py-2 '>
-              <div id='Brand' className='text-3xl text-black-700'>
-          WDCC Workshop Application
+          <header style={{backgroundColor:'#2F6A8F'}}>
+            <nav class="flex items-center justify-between flex-wrap p-6">
+              <div class="flex items-center flex-shrink-0 text-white mr-6">
+                <img class="fill-current w-8 mr-2"  src='/logo.png'></img>
+                <a href='/'>
+                  <span class="font-semibold text-xl tracking-tight">
+                    Friender
+                  </span>
+                </a>
               </div>
-              <ul className=' flex   '>
-                <MenuItem href='/'>
-              Home
-                </MenuItem>
-                <MenuItem href='/about'>
-              About
-                </MenuItem>
-                {!loading &&
-            (user ? (
-              <>
-                <MenuItem href='/reportSWR'>
-                Report
-                </MenuItem>
-                <MenuItem href='/api/logout'>
-                Logout
-                </MenuItem>
-              </>
-            ) : (
-              <MenuItem href='/api/login'>
-                Login
-              </MenuItem>
-            ))}
-              </ul>
+              <div class="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
+                <div class="text-sm lg:flex-grow">
+                  <MenuItem href=''>Show My QR</MenuItem>
+                  <MenuItem href=''>Add A Friend</MenuItem>
+                </div>
+                <div>
+                  <a href="/api/logout" class="inline-block text-sm px-4 py-2 leading-none 
+                        border rounded text-white border-white mt-4 lg:mt-0">
+                    Logout
+                  </a>
+                </div>
+              </div>
             </nav>
-
           </header>
-
         </>)}
     </>
     
