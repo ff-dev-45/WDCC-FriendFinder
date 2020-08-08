@@ -1,8 +1,14 @@
 /* eslint-disable no-unused-vars */
 const MenuItem = ({ children, href }) =>
-  <a href={href} class="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4 hover:underline">
+  <a href={href} class="block mt-4 mb-4 lg:inline-block lg:mt-0 lg:mb-0 text-white mr-4 hover:underline">
     {children}
   </a>
+
+const buttonStyle = {
+  color: 'white',
+  border: '1px solid white',
+  fontSize:'14px'
+}
 
 function Header ({ user, loading }) {
   return (
@@ -26,9 +32,10 @@ function Header ({ user, loading }) {
                   <MenuItem href=''>Add A Friend</MenuItem>
                 </div>
                 <div>
-                  <a href="/api/logout" class="inline-block text-sm px-4 py-2 leading-none 
-                        border rounded text-white border-white mt-4 lg:mt-0">
-                    Logout
+                  <a href='/api/logout'>
+                    <button className="py-2 px-4 rounded-md focus:outline-none" style={buttonStyle}>
+                      Log Out
+                    </button>
                   </a>
                 </div>
               </div>
