@@ -6,8 +6,8 @@ const handler = nextConnect()
 handler.use(mongodb)
 
 handler.get(async (req, res) => {
-  const doc = await req.db.collection('users').find({userid: req.query.userid}).toArray()
-  res.json(doc)
+  const doc = await req.db.collection('users').findOne({userid: req.query.userid})
+  res.json(doc || 'null')
 })
 
 export default handler
