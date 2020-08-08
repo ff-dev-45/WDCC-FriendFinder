@@ -2,6 +2,7 @@ import React, { Component, useState, useEffect } from 'react';
 import { Map, GoogleApiWrapper } from 'google-maps-react';
 import { InfoWindow, Marker } from 'google-maps-react';
 import axios from 'axios'
+import config from '../lib/config';
 
 const mapStyles = {
   width: '100%',
@@ -15,7 +16,7 @@ const MapContainer = (props) => {
   const [locations, setLocations] = useState([]);
 
   useEffect(() => {
-    axios.get("http://localhost:3141/api/locations")
+    axios.get(`${config.HOST}/api/locations`)
       .then(res => {
         setLocations(res.data);
       })
