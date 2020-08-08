@@ -32,10 +32,6 @@ function Home () {
     // TODO display feedback if event is ok
   }
 
-  const handleClick = (e) => {
-    // console.log(e.target)
-    logEvent('click', 1)
-  }
   return (
     <Layout user={user} loading={loading}>
 
@@ -46,7 +42,7 @@ function Home () {
         </>
       )}
       {user && (
-        <Header/>
+        <Header user={user}/>
       )}
     </Layout>
   )

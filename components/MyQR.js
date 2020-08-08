@@ -4,13 +4,13 @@ import useWindowDimensions from '../lib/useWindowDimensions'
 
 const MAX_SIZE = 400
 
-export const MyQR = ({ user }) => {
+export const MyQR = ({ user, onClick }) => {
   const { height: windowHeight, width: windowWidth } = useWindowDimensions()
   const minDimension = Math.min(windowHeight, windowWidth)
 
   const size = minDimension > config.MIN_LARGE_SCREEN_WIDTH ? MAX_SIZE : minDimension
   return (
-    <>
+    <div onClick={ev => onClick(ev)}>
       <div style={{
         position: 'absolute',
         left: '0',
@@ -31,7 +31,7 @@ export const MyQR = ({ user }) => {
           size={size}
         />
       </div>
-    </>
+    </div>
   )
 }
 
