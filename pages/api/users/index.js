@@ -9,7 +9,6 @@ handler.get(async (req, res) => {
   // find returns a cursor which we need to iterate through to get the results.
   // use next or toArray
   const doc = await req.db.collection('users').find().toArray()
-  console.log(doc)
   res.json(doc)
 })
 
