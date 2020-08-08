@@ -3,6 +3,7 @@ import { Map, GoogleApiWrapper } from 'google-maps-react'
 import { InfoWindow, Marker } from 'google-maps-react'
 import axios from 'axios'
 import config from '../lib/config'
+import UserLocation from '../components/myLocation'
 
 const mapStyles = {
   width: '100vw',
@@ -50,6 +51,7 @@ const MapContainer = (props) => {
           onClick={onMarkerClick}
         />
       ))}
+      <UserLocation user={props.user}/>
       <InfoWindow
         marker={activeMarker}
         visible={showingInfoWindow}
