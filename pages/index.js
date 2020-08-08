@@ -46,11 +46,8 @@ function Home () {
         </>
       )}
       {user && (
-        <>
-          <Header/>
-          
-
-        </>)}
+        <Header/>
+      )}
     </Layout>
   )
 }
