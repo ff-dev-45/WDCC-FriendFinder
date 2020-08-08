@@ -15,7 +15,7 @@ handler.get(async (req, res) => {
 handler.post(async (req, res) => {
   const data = req.body
   try {
-    await req.db.collection('locations').insert(data)
+    await req.db.collection('locations').updateOne({ userid: data.userid }, { $set: data }, { upsert: true })
     res.json({ message: 'ok' })
   } catch (e) {
     res.json({ message: 'error', e: e.message })
