@@ -5,6 +5,7 @@ import config from '../lib/config'
 import ProfileCard from '../components/ProfileCard'
 import Link from 'next/link'
 import SplashButton from '../components/SplashButton'
+import SplashLayout from '../components/SplashLayout'
 
 
 const LinkA = ({ children, href }) =>
@@ -42,7 +43,7 @@ function Home () {
       {loading && <p>Loading login info...</p>}
       {!loading && !user && (
         <>
-          <SplashButton href='/api/login'/>
+          <SplashLayout/>
         </>
       )}
       {user && (
