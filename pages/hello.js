@@ -1,5 +1,6 @@
 import Layout from '../components/layout'
 import { Greet, Hello } from '../components/Hello'
+
 // React Components can be very very terse
 const name = 'Henry'
 export default () =>
@@ -9,4 +10,7 @@ export default () =>
       <Greet />
       <Hello name={name} />
     </article>
+    <div>
+      <h1>Test</h1>
+    </div>
   </Layout>
