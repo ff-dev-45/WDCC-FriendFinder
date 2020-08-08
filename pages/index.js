@@ -4,6 +4,7 @@ import { useFetchUser } from '../lib/user'
 import config from '../lib/config'
 import Link from 'next/link'
 import SplashLayout from '../components/SplashLayout'
+import Header from '../components/header'
 
 
 const LinkA = ({ children, href }) =>
@@ -46,6 +47,8 @@ function Home () {
       )}
       {user && (
         <>
+          <Header/>
+          
 
         </>)}
     </Layout>
