@@ -5,6 +5,8 @@ import config from '../lib/config'
 import Link from 'next/link'
 import SplashLayout from '../components/SplashLayout'
 import Map from './newworkingmap'
+import Header from '../components/header'
+
 
 const LinkA = ({ children, href }) =>
   <Link href={href}>
@@ -46,9 +48,10 @@ function Home () {
       )}
       {user && (
         <>
-          <h1>Logged in</h1>
+          <Header/>
           <Map />
-        </>)}
+        </>
+      )}
     </Layout>
   )
 }
