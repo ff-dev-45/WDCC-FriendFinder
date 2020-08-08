@@ -4,6 +4,7 @@ import { useFetchUser } from '../lib/user'
 import config from '../lib/config'
 import Link from 'next/link'
 import SplashLayout from '../components/SplashLayout'
+import Map from './newworkingmap'
 import Header from '../components/header'
 
 
@@ -42,7 +43,10 @@ function Home () {
         </>
       )}
       {user && (
-        <Header user={user}/>
+        <>
+          <Header user={user}/>
+          <Map />
+        </>
       )}
     </Layout>
   )
