@@ -23,11 +23,11 @@ handler.get(async (req, res) => {
     if (!currentUser.friends.includes(friendAdded)) {
       currentUser.friends.push(friendAdded)
       await req.db.collection('users').updateOne({ userid }, { $set: currentUser })
-    }
-    return res.json({ status: 'ok'})
+    } 
   } catch (e) {
     return res.json({ status: 'error', message: e.message })
   }
+  return res.redirect('/')
 })
 
 export default handler
