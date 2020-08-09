@@ -13,13 +13,16 @@ const MapContainer = (props) => {
   useEffect(() => {
     var userObj = {}
     var locationData = []
-    var newLocationData = []
+    var newLocationData = [] 
 
-    axios.get(`${config.HOST}/api/users/${props.user.sub}`)
+    axios.get(`${config.HOST}/api/users`)
       .then(res => {
-        res.data.friends.forEach(element => {
+        var resData = res.data
+        const friendData = res.data.filter(e => e.userid === props.user.sub)[0].friends
+        friendData.push(props.user.sub)
+        resData = resData.filter(e => friendData.includes(e.userid))
+        resData.forEach(element => {
           const { userid } = element
-          // same as `userObj[userId] = element`?
           userObj = {
             ...userObj,
             [userid]: element
@@ -38,21 +41,19 @@ const MapContainer = (props) => {
               const user = userObj[userid]
               const { firstname, lastname } = user
               name = firstname + ' ' + lastname
-            } else {
-              name = userid
-            }
-            newLocationData.push({
-              position: {
-                lat: element.position.lat,
-                lng: element.position.lng,
-                alt: element.position.alt,
-              },
-              name: name,
-              userid: element.userid
-            })
+              newLocationData.push({
+                position: {
+                  lat: element.position.lat,
+                  lng: element.position.lng,
+                  alt: element.position.alt,
+                },
+                name: name,
+                userid: element.userid
+              })
+            }            
           })
         } 
-        
+
         setLocations(newLocationData)
       })
   }, [])
@@ -108,7 +109,7 @@ const MapContainer = (props) => {
         fillOpacity={0.3}
       >
       </Circle>}
- 
+
       <InfoWindow
         marker={activeMarker}
         visible={showingInfoWindow}
@@ -120,8 +121,9 @@ const MapContainer = (props) => {
       </InfoWindow>
     </Map>
   )
+
 }
 
 export default GoogleApiWrapper({
   apiKey: 'AIzaSyCaNcb7yV0i3cIdrZq5LtAQ3rbxncGlbS0'
-})(MapContainer)
+})(MapContainer) 
