@@ -16,7 +16,9 @@ function Home () {
       {user && <>
         <Header user={user}/>
         <AddLocationTracking user={user}/>
-        <Map user={user}/>
+        <div style={{ position: 'relative', flex: 1 }}>
+          <Map user={user}/>
+        </div>
       </>}
     </Layout>
   )

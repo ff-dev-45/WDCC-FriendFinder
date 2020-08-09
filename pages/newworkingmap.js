@@ -1,4 +1,4 @@
-import React, { Component, useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Map, GoogleApiWrapper, Circle, InfoWindow, Marker } from 'google-maps-react'
 import axios from 'axios'
 import config from '../lib/config'
@@ -127,4 +127,3 @@ const MapContainer = (props) => {
 export default GoogleApiWrapper({
   apiKey: 'AIzaSyCaNcb7yV0i3cIdrZq5LtAQ3rbxncGlbS0'
 })(MapContainer)
-
