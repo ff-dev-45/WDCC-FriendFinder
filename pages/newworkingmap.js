@@ -21,9 +21,9 @@ const MapContainer = (props) => {
     var locationData = []
     var newLocationData = []
 
-    axios.get(`${config.HOST}/api/users`)
+    axios.get(`${config.HOST}/api/users/${props.user.sub}`)
       .then(res => {
-        res.data.forEach(element => {
+        res.data.friends.forEach(element => {
           const { userid } = element
           userObj = {
             ...userObj,
@@ -33,28 +33,31 @@ const MapContainer = (props) => {
         return axios.get(`${config.HOST}/api/locations`)
       })
       .then(res => {
-        locationData = res.data
-        locationData.forEach(element => {
-          const { userid } = element
-          var name = ''
-          if (userObj[userid] !== undefined) {
-            // User id exist in the user table
-            const user = userObj[userid]
-            const { firstname, lastname } = user
-            name = firstname + ' ' + lastname
-          } else {
-            name = userid
-          }
-          newLocationData.push({
-            position: {
-              lat: element.position.lat,
-              lng: element.position.lng,
-              alt: element.position.alt,
-            },
-            name: name,
-            userid: element.userid
+        if (Object.keys(userObj).length !== 0) {
+          locationData = res.data
+          locationData.forEach(element => {
+            const { userid } = element
+            var name = ""
+            if (userObj[userid] !== undefined) {
+              // User id exist in the user table
+              const user = userObj[userid]
+              const { firstname, lastname } = user
+              name = firstname + " " + lastname
+            } else {
+              name = userid
+            }
+            newLocationData.push({
+              position: {
+                lat: element.position.lat,
+                lng: element.position.lng,
+                alt: element.position.alt,
+              },
+              name: name,
+              userid: element.userid
+            })
           })
-        })
+        } 
+        
         setLocations(newLocationData)
       })
   }, [])
