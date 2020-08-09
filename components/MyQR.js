@@ -12,6 +12,7 @@ export const MyQR = ({ user, onClick, style }) => {
   return (
     <div onClick={ev => onClick(ev)}>
       <div style={{
+        zIndex: 1,
         position: 'absolute',
         left: '0',
         top: '0',
