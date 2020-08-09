@@ -19,11 +19,15 @@ const MapContainer = (props) => {
   useEffect(() => {
     var userObj = {}
     var locationData = []
-    var newLocationData = []
+    var newLocationData = [] 
 
-    axios.get(`${config.HOST}/api/users/${props.user.sub}`)
+    axios.get(`${config.HOST}/api/users`)
       .then(res => {
-        res.data.friends.forEach(element => {
+        var resData = res.data
+        const friendData = res.data.filter(e => e.userid === props.user.sub)[0].friends
+        friendData.push(props.user.sub)
+        resData = resData.filter(e => friendData.includes(e.userid))
+        resData.forEach(element => {
           const { userid } = element
           userObj = {
             ...userObj,
@@ -43,18 +47,16 @@ const MapContainer = (props) => {
               const user = userObj[userid]
               const { firstname, lastname } = user
               name = firstname + " " + lastname
-            } else {
-              name = userid
-            }
-            newLocationData.push({
-              position: {
-                lat: element.position.lat,
-                lng: element.position.lng,
-                alt: element.position.alt,
-              },
-              name: name,
-              userid: element.userid
-            })
+              newLocationData.push({
+                position: {
+                  lat: element.position.lat,
+                  lng: element.position.lng,
+                  alt: element.position.alt,
+                },
+                name: name,
+                userid: element.userid
+              })
+            }            
           })
         } 
         
