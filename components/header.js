@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import MyQR from './MyQR'
-import useWindowDimensions from '../lib/useWindowDimensions'
 
 /* eslint-disable no-unused-vars */
 const MenuItem = ({ children, href, onClick, style }) => {
@@ -40,8 +39,6 @@ const headerMargins = {
 function Header ({ user }) {
   const [qrShown, setQrShown] = useState(false)
 
-  const { windowHeight, largeScreen } = useWindowDimensions()
-
   return (
     <>
       {qrShown && <MyQR user={user} onClick={() => setQrShown(false)} />}
@@ -51,12 +48,12 @@ function Header ({ user }) {
           Friender
         </span>
         <MenuItem style={headerMargins} onClick={() => setQrShown(true)}>Show My QR</MenuItem>
-        <MenuItem style={headerMargins}>Add A Friend</MenuItem>
-        <a href='/api/logout' style={{marginLeft: 'auto'}}>
+        <a href='/api/logout' style={{marginRight: '1rem', marginLeft: 'auto'}}>
           <button className="" style={buttonStyle}>
             Log Out
           </button>
         </a>
+        <img src={user.picture} style={{ height: '2.6rem', borderRadius: '50%' }} />
       </header>
     </>
   )
