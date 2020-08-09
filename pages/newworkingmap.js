@@ -1,13 +1,7 @@
-import React, { Component, useState, useEffect } from 'react'
-import { Map, GoogleApiWrapper, Circle } from 'google-maps-react'
-import { InfoWindow, Marker } from 'google-maps-react'
+import React, { useState, useEffect } from 'react'
+import { Map, GoogleApiWrapper, Circle, InfoWindow, Marker } from 'google-maps-react'
 import axios from 'axios'
 import config from '../lib/config'
-
-const mapStyles = {
-  width: '100vw',
-  height: '100vh',
-}
 
 const MapContainer = (props) => {
   const [showingInfoWindow, setShowingInfoWindow] = useState(false)
@@ -88,7 +82,6 @@ const MapContainer = (props) => {
     <Map
       google={props.google}
       zoom={14}
-      style={mapStyles}
       initialCenter={{ lat: -36.8497513, lng: 174.762881 }}
     >
       {locations.map(user => (

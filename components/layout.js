@@ -11,6 +11,8 @@ const mainStyles = {
   overflow: 'hidden',
   margin: 0,
   padding: 0,
+  display: 'flex',
+  flexFlow: 'column nowrap'
 }
 
 function Layout ({ children }) {
