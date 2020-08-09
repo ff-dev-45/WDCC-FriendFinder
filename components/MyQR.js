@@ -8,7 +8,7 @@ export const MyQR = ({ user, onClick, style }) => {
   const { height: windowHeight, width: windowWidth } = useWindowDimensions()
   const minDimension = Math.min(windowHeight, windowWidth)
 
-  const size = minDimension > config.MIN_LARGE_SCREEN_WIDTH ? MAX_SIZE : minDimension
+  const size = minDimension > config.MIN_LARGE_SCREEN_WIDTH ? MAX_SIZE : minDimension * 0.95
   return (
     <div onClick={ev => onClick(ev)}>
       <div style={{
