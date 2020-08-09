@@ -16,7 +16,7 @@ function Home () {
       {user && <>
         <Header user={user}/>
         <AddLocationTracking user={user}/>
-        <Map />
+        <Map user={user}/>
       </>}
     </Layout>
   )

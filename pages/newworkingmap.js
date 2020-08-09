@@ -3,6 +3,7 @@ import { Map, GoogleApiWrapper } from 'google-maps-react'
 import { InfoWindow, Marker } from 'google-maps-react'
 import axios from 'axios'
 import config from '../lib/config'
+import UserLocation from '../components/myLocation'
 
 const mapStyles = {
   width: '100vw',
@@ -16,9 +17,45 @@ const MapContainer = (props) => {
   const [locations, setLocations] = useState([])
 
   useEffect(() => {
-    axios.get(`${config.HOST}/api/locations`)
+    var userObj = {}
+    var locationData = []
+    var newLocationData = []
+
+    axios.get(`${config.HOST}/api/users`)
       .then(res => {
-        setLocations(res.data)
+        res.data.forEach(element => {
+          const { userid } = element
+          userObj = {
+            ...userObj,
+            [userid]: element
+          }
+        })
+        return axios.get(`${config.HOST}/api/locations`)
+      })
+      .then(res => {
+        locationData = res.data
+        locationData.forEach(element => {
+          const { userid } = element
+          var name = ""
+          if (userObj[userid] !== undefined) {
+            // User id exist in the user table
+            const user = userObj[userid]
+            const { firstname, lastname } = user
+            name = firstname + " " + lastname
+          } else {
+            name = userid
+          }
+          newLocationData.push({
+            position: {
+              lat: element.position.lat,
+              lng: element.position.lng,
+              alt: element.position.alt,
+            },
+            name: name,
+            userid: element.userid
+          })
+        })
+        setLocations(newLocationData)
       })
   }, [])
 
@@ -46,10 +83,11 @@ const MapContainer = (props) => {
         <Marker
           key={user.userid}
           position={user.position}
-          name={user.userid}
+          name={user.name}
           onClick={onMarkerClick}
         />
       ))}
+      <UserLocation user={props.user}/>
       <InfoWindow
         marker={activeMarker}
         visible={showingInfoWindow}

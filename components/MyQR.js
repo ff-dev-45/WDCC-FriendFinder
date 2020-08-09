@@ -4,7 +4,7 @@ import useWindowDimensions from '../lib/useWindowDimensions'
 
 const MAX_SIZE = 400
 
-export const MyQR = ({ user, onClick }) => {
+export const MyQR = ({ user, onClick, style }) => {
   const { height: windowHeight, width: windowWidth } = useWindowDimensions()
   const minDimension = Math.min(windowHeight, windowWidth)
 
@@ -20,6 +20,7 @@ export const MyQR = ({ user, onClick }) => {
         width: '100%',
         backgroundColor: 'rgba(0, 0, 0, 0.5)',
         backdropFilter: 'blur(8px)',
+        ...style,
       }}>
         <div style={{
           position: 'absolute',

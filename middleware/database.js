@@ -8,11 +8,9 @@ const client = new MongoClient(config.MONGODB_URI, {
 })
 
 async function database (req, res, next) {
-  // console.log('connecting to mongo', config.MONGODB_URI)
   if (!client.isConnected()) await client.connect()
   req.dbClient = client
   req.db = client.db(config.DB_NAME)
-  // console.log(req.db)
   return next()
 }
 

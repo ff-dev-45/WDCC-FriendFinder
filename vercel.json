@@ -1,14 +1,16 @@
 {
   "build": {
     "env": {
-      "AUTH0_DOMAIN": "dev-so1al4mm.au.auth0.com",
-      "AUTH0_CLIENT_ID": "QuMmUTJm7sVpOc6z0XkJ3SLw9Qndiybr",
-      "AUTH0_CLIENT_SECRET": "@auth0_client_secret",
-      "REDIRECT_URI": "https://wdcc-mern-template.andrew-omgtech.vercel.app/api/callback",
-      "POST_LOGOUT_REDIRECT_URI": "https://wdcc-mern-template.andrew-omgtech.vercel.app",
-      "SESSION_COOKIE_SECRET": "@session_cookie_secret",
-      "HOST":"https://wdcc-mern-template.andrew-omgtech.vercel.app",
-      "MONGODB_URI":"@mongodb_uri"
+      "AUTH0_DOMAIN": "wdcc-2020.au.auth0.com",
+      "AUTH0_CLIENT_ID": "sy6LwpP4LyfB92M6K9eNA5pg9qyVaqIT",
+      "AUTH0_CLIENT_SECRET": "xKKkS4WNNrQU9gGrIyGdDVgrYvBz2MFUMpzv1tEVDjN_62MFDCWPXTpZeSfcviii",
+      "REDIRECT_URI": "https://wdcc-friender.vercel.app/api/callback",
+      "POST_LOGOUT_REDIRECT_URI": "https://wdcc-friender.vercel.app",
+      "SESSION_COOKIE_SECRET": "viloxyf_zfds2GW6fdfgfK4CT-KQD_MKLoLEA2g32dwqv5jWuq4Jd0P7ymgG5GJGMpvMneXZzhK3sL",
+      "HOST":"https://wdcc-friender.vercel.app",
+      "MONGODB_URI":"mongodb+srv://bob:testtest123@cluster0.cvoj5.mongodb.net",
+      "DB_NAME": "wdcc-friender",
+      "PORT": "3000"
     }
   }
 }
