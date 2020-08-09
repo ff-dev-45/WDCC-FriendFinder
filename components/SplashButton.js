@@ -1,7 +1,7 @@
 export const SplashButton = () => {
   const buttonStyle = {
     color: 'white',
-    backgroundColor: '#79A2C2'
+    backgroundColor: '#2F6A8F'
   }
   
   return (
