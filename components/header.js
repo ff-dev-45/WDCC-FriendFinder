@@ -6,8 +6,9 @@ const MenuItem = ({ children, href, onClick, style }) => {
   return (
     <a
       href={href}
-      style={{textDecoration: 'underline', cursor: 'pointer', ...style}}
+      style={{cursor: 'pointer', ...style}}
       onClick={onClick && (ev => onClick(ev))}
+      class='hover:underline' 
     >
       {children}
     </a>
