@@ -1,9 +1,8 @@
 import React, { Component, useState, useEffect } from 'react'
-import { Map, GoogleApiWrapper } from 'google-maps-react'
+import { Map, GoogleApiWrapper, Circle } from 'google-maps-react'
 import { InfoWindow, Marker } from 'google-maps-react'
 import axios from 'axios'
 import config from '../lib/config'
-import UserLocation from '../components/myLocation'
 
 const mapStyles = {
   width: '100vw',
@@ -15,6 +14,7 @@ const MapContainer = (props) => {
   const [activeMarker, setActiveMarker] = useState({})
   const [selectedPlace, setSelectedPlace] = useState({})
   const [locations, setLocations] = useState([])
+  const [currentLocation, setLocation] = useState(null)
 
   useEffect(() => {
     axios.get(`${config.HOST}/api/locations`)
@@ -36,6 +36,18 @@ const MapContainer = (props) => {
     }
   }
 
+  useEffect(() => {
+    navigator.geolocation.watchPosition(
+      pos => setLocation({
+        lat: pos.coords.latitude,
+        lng: pos.coords.longitude,
+        radius: pos.coords.accuracy,
+      }),
+      null,
+      { enableHighAccuracy: true }
+    )
+  }, [])
+
   return (
     <Map
       google={props.google}
@@ -51,7 +63,13 @@ const MapContainer = (props) => {
           onClick={onMarkerClick}
         />
       ))}
-      <UserLocation user={props.user}/>
+
+      {currentLocation!==null && <Circle
+        center={currentLocation}
+        radius= {currentLocation.radius}
+      >
+      </Circle>}
+ 
       <InfoWindow
         marker={activeMarker}
         visible={showingInfoWindow}
@@ -69,3 +87,4 @@ const MapContainer = (props) => {
 export default GoogleApiWrapper({
   apiKey: 'AIzaSyCaNcb7yV0i3cIdrZq5LtAQ3rbxncGlbS0'
 })(MapContainer)
+
