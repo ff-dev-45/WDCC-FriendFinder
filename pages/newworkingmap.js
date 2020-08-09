@@ -53,7 +53,7 @@ const MapContainer = (props) => {
             }            
           })
         } 
-        
+
         setLocations(newLocationData)
       })
   }, [])
@@ -109,7 +109,7 @@ const MapContainer = (props) => {
         fillOpacity={0.3}
       >
       </Circle>}
- 
+
       <InfoWindow
         marker={activeMarker}
         visible={showingInfoWindow}
@@ -126,4 +126,4 @@ const MapContainer = (props) => {
 
 export default GoogleApiWrapper({
   apiKey: 'AIzaSyCaNcb7yV0i3cIdrZq5LtAQ3rbxncGlbS0'
-})(MapContainer)
+})(MapContainer) 
