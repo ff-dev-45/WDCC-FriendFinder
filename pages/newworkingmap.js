@@ -36,12 +36,12 @@ const MapContainer = (props) => {
         locationData = res.data
         locationData.forEach(element => {
           const { userid } = element
-          var name = ""
+          var name = ''
           if (userObj[userid] !== undefined) {
             // User id exist in the user table
             const user = userObj[userid]
             const { firstname, lastname } = user
-            name = firstname + " " + lastname
+            name = firstname + ' ' + lastname
           } else {
             name = userid
           }
@@ -97,12 +97,18 @@ const MapContainer = (props) => {
           position={user.position}
           name={user.name}
           onClick={onMarkerClick}
+          animation={google.maps.Animation.DROP}
         />
       ))}
 
       {currentLocation!==null && <Circle
         center={currentLocation}
         radius= {currentLocation.radius}
+        strokeColor="#7DCEF5"
+        strokeOpacity={0.5}
+        strokeWeight={1}
+        fillColor="#7DCEF5"
+        fillOpacity={0.3}
       >
       </Circle>}
  
