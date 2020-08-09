@@ -1,5 +1,5 @@
 import React, { Component, useState, useEffect } from 'react'
-import { Map, GoogleApiWrapper } from 'google-maps-react'
+import { Map, GoogleApiWrapper, Circle } from 'google-maps-react'
 import { InfoWindow, Marker } from 'google-maps-react'
 import axios from 'axios'
 import config from '../lib/config'
@@ -14,15 +14,16 @@ const MapContainer = (props) => {
   const [activeMarker, setActiveMarker] = useState({})
   const [selectedPlace, setSelectedPlace] = useState({})
   const [locations, setLocations] = useState([])
+  const [currentLocation, setLocation] = useState(null)
 
   useEffect(() => {
     var userObj = {}
     var locationData = []
     var newLocationData = []
 
-    axios.get(`${config.HOST}/api/users`)
+    axios.get(`${config.HOST}/api/users/${props.user.sub}`)
       .then(res => {
-        res.data.forEach(element => {
+        res.data.friends.forEach(element => {
           const { userid } = element
           userObj = {
             ...userObj,
@@ -32,28 +33,31 @@ const MapContainer = (props) => {
         return axios.get(`${config.HOST}/api/locations`)
       })
       .then(res => {
-        locationData = res.data
-        locationData.forEach(element => {
-          const { userid } = element
-          var name = ""
-          if (userObj[userid] !== undefined) {
-            // User id exist in the user table
-            const user = userObj[userid]
-            const { firstname, lastname } = user
-            name = firstname + " " + lastname
-          } else {
-            name = userid
-          }
-          newLocationData.push({
-            position: {
-              lat: element.position.lat,
-              lng: element.position.lng,
-              alt: element.position.alt,
-            },
-            name: name,
-            userid: element.userid
+        if (Object.keys(userObj).length !== 0) {
+          locationData = res.data
+          locationData.forEach(element => {
+            const { userid } = element
+            var name = ""
+            if (userObj[userid] !== undefined) {
+              // User id exist in the user table
+              const user = userObj[userid]
+              const { firstname, lastname } = user
+              name = firstname + " " + lastname
+            } else {
+              name = userid
+            }
+            newLocationData.push({
+              position: {
+                lat: element.position.lat,
+                lng: element.position.lng,
+                alt: element.position.alt,
+              },
+              name: name,
+              userid: element.userid
+            })
           })
-        })
+        } 
+        
         setLocations(newLocationData)
       })
   }, [])
@@ -71,6 +75,18 @@ const MapContainer = (props) => {
     }
   }
 
+  useEffect(() => {
+    navigator.geolocation.watchPosition(
+      pos => setLocation({
+        lat: pos.coords.latitude,
+        lng: pos.coords.longitude,
+        radius: pos.coords.accuracy,
+      }),
+      null,
+      { enableHighAccuracy: true }
+    )
+  }, [])
+
   return (
     <Map
       google={props.google}
@@ -84,8 +100,21 @@ const MapContainer = (props) => {
           position={user.position}
           name={user.name}
           onClick={onMarkerClick}
+          animation={google.maps.Animation.DROP}
         />
       ))}
+
+      {currentLocation!==null && <Circle
+        center={currentLocation}
+        radius= {currentLocation.radius}
+        strokeColor="#7DCEF5"
+        strokeOpacity={0.5}
+        strokeWeight={1}
+        fillColor="#7DCEF5"
+        fillOpacity={0.3}
+      >
+      </Circle>}
+ 
       <InfoWindow
         marker={activeMarker}
         visible={showingInfoWindow}
@@ -103,3 +132,4 @@ const MapContainer = (props) => {
 export default GoogleApiWrapper({
   apiKey: 'AIzaSyCaNcb7yV0i3cIdrZq5LtAQ3rbxncGlbS0'
 })(MapContainer)
+
