@@ -7,6 +7,7 @@ const MenuItem = ({ children, href, onClick }) =>
     href={href}
     onClick={onClick && (ev => onClick(ev))}
     className="block mt-4 mb-4 sm:inline-block lg:inline-block lg:mt-0 lg:mb-0 text-white mr-4 hover:underline"
+    style={{cursor:'pointer'}}
   >
     {children}
   </a>
@@ -22,7 +23,7 @@ function Header ({ user, loading }) {
 
   return (
     <>
-      {qrShown && <MyQR user={user} onClick={() => setQrShown(false)}></MyQR>}
+      {qrShown && <MyQR user={user} style={{zIndex:100}} onClick={() => setQrShown(false)}></MyQR>}
       <header style={{backgroundColor:'#2F6A8F',position:'fixed',top:0,left:0,zIndex:1,width:'100vw'}}>
         <nav className="flex items-center p-6 flex-wrap sm:flex-nowrap">
           <div className="flex items-center flex-shrink-0 text-white mr-6">
