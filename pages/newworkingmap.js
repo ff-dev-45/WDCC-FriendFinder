@@ -1,13 +1,7 @@
 import React, { Component, useState, useEffect } from 'react'
-import { Map, GoogleApiWrapper, Circle } from 'google-maps-react'
-import { InfoWindow, Marker } from 'google-maps-react'
+import { Map, GoogleApiWrapper, Circle, InfoWindow, Marker } from 'google-maps-react'
 import axios from 'axios'
 import config from '../lib/config'
-
-const mapStyles = {
-  width: '100vw',
-  height: '100vh',
-}
 
 const MapContainer = (props) => {
   const [showingInfoWindow, setShowingInfoWindow] = useState(false)
@@ -41,12 +35,12 @@ const MapContainer = (props) => {
           locationData = res.data
           locationData.forEach(element => {
             const { userid } = element
-            var name = ""
+            var name = ''
             if (userObj[userid] !== undefined) {
               // User id exist in the user table
               const user = userObj[userid]
               const { firstname, lastname } = user
-              name = firstname + " " + lastname
+              name = firstname + ' ' + lastname
               newLocationData.push({
                 position: {
                   lat: element.position.lat,
@@ -93,7 +87,6 @@ const MapContainer = (props) => {
     <Map
       google={props.google}
       zoom={14}
-      style={mapStyles}
       initialCenter={{ lat: -36.8497513, lng: 174.762881 }}
     >
       {locations.map(user => (
