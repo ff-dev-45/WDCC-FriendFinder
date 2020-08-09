@@ -11,20 +11,13 @@ function Home () {
 
   return (
     <Layout user={user} loading={loading}>
-
       {loading && <p>Loading login info...</p>}
-      {!loading && !user && (
-        <>
-          <SplashLayout/>
-        </>
-      )}
-      {user && (
-        <>
-          <Header user={user}/>
-          <AddLocationTracking user={user}/>
-          <Map />
-        </>
-      )}
+      {!loading && !user && <SplashLayout/>}
+      {user && <>
+        <Header user={user}/>
+        <AddLocationTracking user={user}/>
+        <Map user={user}/>
+      </>}
     </Layout>
   )
 }

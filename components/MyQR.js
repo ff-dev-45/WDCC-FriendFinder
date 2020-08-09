@@ -4,7 +4,7 @@ import useWindowDimensions from '../lib/useWindowDimensions'
 
 const MAX_SIZE = 400
 
-export const MyQR = ({ user, onClick }) => {
+export const MyQR = ({ user, onClick, style }) => {
   const { height: windowHeight, width: windowWidth } = useWindowDimensions()
   const minDimension = Math.min(windowHeight, windowWidth)
 
@@ -12,6 +12,7 @@ export const MyQR = ({ user, onClick }) => {
   return (
     <div onClick={ev => onClick(ev)}>
       <div style={{
+        zIndex: 1,
         position: 'absolute',
         left: '0',
         top: '0',
@@ -19,17 +20,19 @@ export const MyQR = ({ user, onClick }) => {
         width: '100%',
         backgroundColor: 'rgba(0, 0, 0, 0.5)',
         backdropFilter: 'blur(8px)',
-      }}/>
-      <div style={{
-        position: 'absolute',
-        left: '50%',
-        top: '50%',
-        transform: 'translate(-50%, -50%)',
+        ...style,
       }}>
-        <QRCode
-          value={`${config.HOST}/api/addFriend?sub=${user.sub}`}
-          size={size}
-        />
+        <div style={{
+          position: 'absolute',
+          left: '50%',
+          top: '50%',
+          transform: 'translate(-50%, -50%)',
+        }}>
+          <QRCode
+            value={`${config.HOST}/api/addFriend?sub=${user.sub}`}
+            size={size}
+          />
+        </div>
       </div>
     </div>
   )
